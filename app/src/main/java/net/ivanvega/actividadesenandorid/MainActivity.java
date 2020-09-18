@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Bienvenido " + user ,
                 Toast.LENGTH_LONG).show();
-
+        //Bryan OSwaldo Jiménez Guzmán
 
     }
 
