@@ -49,6 +49,7 @@ public class ActividadDOs extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Hola a todos :D
                 finish();
             }
 
