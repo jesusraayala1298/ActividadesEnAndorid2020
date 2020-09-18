@@ -49,6 +49,10 @@ public class ActividadDOs extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getBaseContext(), txtUsuario.getText().toString(),
+                    Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), txtUsuario.getText().toString(),
+                    Toast.LENGTH_LONG).show();
                 finish();
             }
 
