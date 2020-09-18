@@ -4,7 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-
+    <!--
+    Aqui esta mi comentario EHVM
+    -->
 
     <EditText
         android:id="@+id/txtUser"
