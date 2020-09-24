@@ -9,7 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivityInstents"></activity>
+        <activity android:name=".ActivitesImplicitos">
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW"></action>
+            <action android:name="net.ivanvega.actividadesenandorid.VISOR"></action>
+        </intent-filter>
+    </activity>
+        <activity android:name=".MainActivityInstents" />
         <activity android:name=".ActivityRegitro" />
         <activity android:name=".MainActivity" />
         <activity android:name=".ActividadDOs">

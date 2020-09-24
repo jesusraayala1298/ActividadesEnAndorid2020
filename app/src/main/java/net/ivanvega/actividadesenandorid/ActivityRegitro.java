@@ -6,7 +6,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +16,9 @@ public class ActivityRegitro extends AppCompatActivity {
 
     TextView txtNombre, txtPass, txtEmail, txtTel;
     Button btnAgregar, btnCancelar;
+    Spinner spnPaisds ;
+    String[] arrPaises;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +30,14 @@ public class ActivityRegitro extends AppCompatActivity {
         txtEmail = (TextView) findViewById(R.id.txtEmail);
         txtTel = (TextView) findViewById(R.id.txtTel);
 
+        String botonOK = getResources().getString(R.string.registro_modificar);
+
+
+
         btnAgregar = (Button) findViewById(R.id.btnGuardar);
+
+        btnAgregar.setText(botonOK);
+
         btnCancelar = (Button) findViewById(R.id.btnCancelar);
 
         btnAgregar.setOnClickListener(new View.OnClickListener() {
@@ -54,5 +66,16 @@ public class ActivityRegitro extends AppCompatActivity {
                 finish();
             }
         });
+
+        spnPaisds = findViewById(R.id.spnPaises);
+
+        arrPaises =  getResources().getStringArray(R.array.paises);
+
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(this , android.R.layout.simple_spinner_item,
+                        android.R.id.text1,  arrPaises);
+
+        spnPaisds.setAdapter(adapter);
+
     }
 }
