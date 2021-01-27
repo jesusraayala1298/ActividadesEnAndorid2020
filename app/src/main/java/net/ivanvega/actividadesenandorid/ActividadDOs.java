@@ -11,6 +11,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import net.ivanvega.actividadesenandorid.data.DAOUsuarios;
+import net.ivanvega.actividadesenandorid.data.Usuario;
+
 public class ActividadDOs extends AppCompatActivity {
     private static final int ACTIVITY_REGISTRO = 1000 ;
     Button btnOk, btnCancel;
@@ -29,19 +32,37 @@ public class ActividadDOs extends AppCompatActivity {
         btnCancel = findViewById(R.id.btnCancel);
 
         btnOk .setOnClickListener( v -> {
-            Toast.makeText(getBaseContext(), txtUsuario.getText().toString(),
-                    Toast.LENGTH_LONG).show();
 
 
 
-            Intent intent = new Intent(ActividadDOs.this,
-                    MainActivity.class );
+            DAOUsuarios dao = new DAOUsuarios(getApplicationContext());
 
-            intent.putExtra("user",
-                    txtUsuario.getText().toString());
-            intent.putExtra("id", 789);
+            Usuario usuarioAutenticado = dao.autenticar(new Usuario(
+                    txtUsuario.getText().toString(),
+                    txtContraseña.getText().toString()
+            )
+            );
 
-            startActivity(intent);
+            if(usuarioAutenticado.getID()!=0){
+                Intent intent = new Intent(ActividadDOs.this,
+                        MainActivity.class );
+
+                intent.putExtra("user",
+                         usuarioAutenticado);
+
+                startActivity(intent);
+            }else{
+                Toast.makeText(getBaseContext(),
+                        txtUsuario.getText().toString() + " SIN ACCESO",
+                        Toast.LENGTH_LONG).show();
+            }
+
+
+
+
+
+
+
 
 
         });

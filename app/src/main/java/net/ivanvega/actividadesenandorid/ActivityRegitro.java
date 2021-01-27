@@ -12,6 +12,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.ivanvega.actividadesenandorid.data.DAOUsuarios;
+import net.ivanvega.actividadesenandorid.data.Usuario;
+
 public class ActivityRegitro extends AppCompatActivity {
 
     TextView txtNombre, txtPass, txtEmail, txtTel;
@@ -50,12 +53,24 @@ public class ActivityRegitro extends AppCompatActivity {
                 Usuario nuevo =
                         new Usuario(nombre,tel,email,pass);
 
-                Intent intent = new Intent();
-                intent.putExtra("nuevoCliente", nuevo);
-                Toast.makeText(getApplicationContext(), "Objecto guardado dentro de Intent!", Toast.LENGTH_LONG).show();
 
-                setResult(Activity.RESULT_OK,  intent  );
-                finish();
+                DAOUsuarios dao =
+                        new DAOUsuarios(getApplicationContext());
+
+                if( dao.insert(nuevo)!= -1){
+                    Intent intent = new Intent();
+                    intent.putExtra("nuevoCliente", nuevo);
+                    Toast.makeText(getApplicationContext(), "Objecto guardado dentro de Intent!", Toast.LENGTH_LONG).show();
+
+                    setResult(Activity.RESULT_OK,  intent  );
+                    finish();
+                }else{
+                    setResult(Activity.RESULT_CANCELED  );
+                    finish();
+
+                }
+
+
             }
         });
 

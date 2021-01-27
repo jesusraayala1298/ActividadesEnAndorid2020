@@ -1,14 +1,28 @@
 package net.ivanvega.actividadesenandorid;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import net.ivanvega.actividadesenandorid.data.DAOUsuarios;
+import net.ivanvega.actividadesenandorid.data.DB;
+import net.ivanvega.actividadesenandorid.data.Usuario;
+
+import org.w3c.dom.Text;
+
 public class MainActivity extends AppCompatActivity {
+    Spinner spn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,11 +31,50 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent =  getIntent();
 
-        String user = intent.getStringExtra("user");
+        Usuario usuarioAutenticado =
+                (Usuario)intent.getSerializableExtra("user");
 
-        Toast.makeText(this, "Bienvenido " + user ,
+        ((TextView)findViewById(R.id.textView)).setText(usuarioAutenticado.getNombre());
+
+
+        Toast.makeText(this, "Bienvenido " + usuarioAutenticado.getEmail() ,
                 Toast.LENGTH_LONG).show();
         //Bryan OSwaldo Jiménez Guzmán
+
+        DAOUsuarios dao = new DAOUsuarios(this);
+        Cursor c = dao.getAllCursor();
+
+        SimpleCursorAdapter simpleCursorAdapter  = new
+                SimpleCursorAdapter(this,
+                android.R.layout.simple_list_item_2,
+                c,
+                new String[]{ DB.COLUMS_TABLEUSUARIOS[0], DB.COLUMS_TABLEUSUARIOS[2]}   ,
+                new int[]{android.R.id.text1, android.R.id.text2 },
+                SimpleCursorAdapter.NO_SELECTION
+                );
+
+        spn =  findViewById(R.id.spinner);
+
+        spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+
+                 String email =  ((Cursor)  adapterView.getItemAtPosition(i)).getString(2);
+
+                 String cadenaID = ((TextView)view.findViewById(android.R.id.text1)).getText().toString();
+                  Toast.makeText(getApplicationContext(), cadenaID ,Toast.LENGTH_LONG).show();
+                  Toast.makeText(getApplicationContext(), email ,Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spn .setAdapter(simpleCursorAdapter);
 
     }
 

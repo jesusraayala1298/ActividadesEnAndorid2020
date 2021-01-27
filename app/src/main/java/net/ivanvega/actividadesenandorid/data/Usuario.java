@@ -1,4 +1,4 @@
-package net.ivanvega.actividadesenandorid;
+package net.ivanvega.actividadesenandorid.data;
 
 import java.io.Serializable;
 
@@ -8,12 +8,26 @@ public class Usuario implements Serializable {
     private String Telefono;
     private String Email;
     private String Contraseña;
+    private long ID;
 
     public Usuario(String nombre, String telefono, String email, String contraseña) {
         Nombre = nombre;
         Telefono = telefono;
         Email = email;
         Contraseña = contraseña;
+    }
+
+    public Usuario(String email, String password) {
+        this.Email = email;
+        this.Contraseña = password;
+    }
+
+    public Usuario(int ID, String nombre, String emaill, String pass, String tel) {
+        this.ID = ID;
+        this.Nombre = nombre;
+        this.Email = emaill;
+        this.Contraseña = pass;
+        this.Telefono = tel;
     }
 
     public String getNombre() {
@@ -51,5 +65,13 @@ public class Usuario implements Serializable {
     @Override
     public String toString(){
         return Nombre;
+    }
+
+    public void setID(long id) {
+        this.ID = id;
+    }
+
+    public long getID() {
+        return ID;
     }
 }
