@@ -41,20 +41,12 @@ public class DAOUsuarios {
 
     }
 
-    public boolean update(Usuario usuario){
-
-        ContentValues cv = new ContentValues();
-
-        cv.put(DB.COLUMS_TABLEUSUARIOS[1], usuario.getNombre());
-        cv.put(DB.COLUMS_TABLEUSUARIOS[2], usuario.getEmail());
-        cv.put(DB.COLUMS_TABLEUSUARIOS[3], usuario.getContraseña());
-        cv.put(DB.COLUMS_TABLEUSUARIOS[4], usuario.getTelefono());
-
+    public boolean update(ContentValues cv){
         return   ad.update(
                 DB.TABLE_USUARIOS_NAME,
                 cv ,
                 "_id=?",
-                new String[]{ String.valueOf( usuario.getID())}
+                new String[]{ String.valueOf( cv.get("ID"))}
                 )   > 0;
     }
 
@@ -129,18 +121,21 @@ public class DAOUsuarios {
         return usuario;
     }
 
-    public long insert(Usuario usuario){
-        ContentValues cv = new ContentValues();
-
-        cv.put(DB.COLUMS_TABLEUSUARIOS[1], usuario.getNombre());
-        cv.put(DB.COLUMS_TABLEUSUARIOS[2], usuario.getEmail());
-        cv.put(DB.COLUMS_TABLEUSUARIOS[3], usuario.getContraseña());
-        cv.put(DB.COLUMS_TABLEUSUARIOS[4], usuario.getTelefono());
+    public long insert(ContentValues cv){
 
         return ad.insert(DB.TABLE_USUARIOS_NAME,
                 null ,
                   cv);
 
+    }
+
+    public Cursor getOneByIDCursor(long id){
+
+        Cursor cursor = null;
+        cursor = ad.rawQuery("select * from " + DB.TABLE_USUARIOS_NAME + " where " +
+                        DB.COLUMS_TABLEUSUARIOS[0]  + "=?",
+                new String[]{ String.valueOf( id)} );
+        return cursor;
     }
 
 }
